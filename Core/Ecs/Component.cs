@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Nucleus
+namespace Nucleus.Ecs
 {
 	public class Component
 	{

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Nucleus
+namespace Nucleus.Ecs
 {
 	public class Entity
 	{
