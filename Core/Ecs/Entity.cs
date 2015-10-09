@@ -5,19 +5,28 @@ namespace Nucleus.Ecs
 {
 	public class Entity
 	{
-		private Dictionary<Type, List<Component>> components = new Dictionary<Type, List<Component>>();
+		private Dictionary<Type, Component> components = new Dictionary<Type, Component>();
 
 		public Entity ()
 		{
 		}
 
-		public void Add(Component component) {
+		public Entity Add(Component component)
+        {
 			var type = component.GetType();
-			if (!this.components.ContainsKey (type)) {
-				this.components[type] = new List<Component> ();
-			}
-			this.components[type].Add(component);
+            this.components[type] = component;
+            return this; // chaining
 		}
+
+        public T Get<T>() where T : Component
+        {
+            var type = typeof(T);
+            // If you're asking for T, you will probably add one soon.
+            if (!this.components.ContainsKey (type)) {
+                throw new ArgumentException("Entity doesn't have any instances of " + type.FullName);
+            }
+            return (T)this.components[type];
+        }
 	}
 }
 
