@@ -9,10 +9,11 @@ namespace Nucleus
     public class CommonGame : Game
     {
         protected readonly GraphicsDeviceManager graphics;
+		protected SpriteBatch spriteBatch;
+
         internal bool Initialized { get; private set; }
 
         public static CommonGame Instance { get; private set; }
-        internal SpriteBatch SpriteBatch { get; private set; }
         internal IKernel Kernel { get; private set; }
 
         public CommonGame()
@@ -52,10 +53,17 @@ namespace Nucleus
         protected override void LoadContent ()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            this.SpriteBatch = new SpriteBatch (GraphicsDevice);
+            this.spriteBatch = new SpriteBatch (GraphicsDevice);
 
             // Setup DI bindings
-
+			this.Kernel.Bind<SpriteBatch>().ToConstant(this.spriteBatch);
+			// Why does the first get call always fail? 'tis strange.
+			try {
+				this.Kernel.Get<SpriteBatch>();
+			} catch (NullReferenceException) {
+				// As expected, sadly. See:
+				// http://stackoverflow.com/questions/8971006/best-way-to-create-spritebatch-when-wrapping-underlying-objects
+			}
             //TODO: use this.Content to load your game content here
         }
 
@@ -88,9 +96,9 @@ namespace Nucleus
 
             if (Screen.CurrentScreen != null)
             {
-                SpriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
+                spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
                 Screen.CurrentScreen.Draw(gameTime);
-                SpriteBatch.End();
+                spriteBatch.End();
             }
 
             base.Draw (gameTime);

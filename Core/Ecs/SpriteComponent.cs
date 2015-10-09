@@ -19,7 +19,7 @@ namespace Nucleus
                 this.Initialize();
             }
 
-            this.spriteBatch = CommonGame.Instance.SpriteBatch;
+            this.spriteBatch = CommonGame.Instance.Kernel.Get<SpriteBatch>();
         }
 
         public void Initialize()
