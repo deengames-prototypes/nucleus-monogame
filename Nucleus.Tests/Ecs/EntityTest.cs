@@ -3,7 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using Nucleus.Ecs;
 
-namespace Nucleus.Tests
+namespace Nucleus.Tests.Ecs
 {
     [TestFixture]
     public class EntityTest

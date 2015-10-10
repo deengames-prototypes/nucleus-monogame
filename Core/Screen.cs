@@ -4,8 +4,9 @@ using Nucleus.Ecs;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Ninject;
+using Nucleus.Ecs.Components;
 
-namespace Nucleus
+namespace Nucleus.Core
 {
     public class Screen : IDisposable
     {

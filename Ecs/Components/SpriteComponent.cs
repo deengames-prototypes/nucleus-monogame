@@ -2,8 +2,9 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Ninject;
+using Nucleus.Core;
 
-namespace Nucleus
+namespace Nucleus.Ecs.Components
 {
     public class SpriteComponent : IDisposable
     {

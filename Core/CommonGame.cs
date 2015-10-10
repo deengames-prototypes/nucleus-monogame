@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ninject;
 
-namespace Nucleus
+namespace Nucleus.Core
 {
     public class CommonGame : Game
     {
