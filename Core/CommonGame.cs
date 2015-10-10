@@ -10,6 +10,7 @@ namespace Nucleus.Core
     public class CommonGame : Game
     {
         public static CommonGame Instance { get; private set; }
+        public bool ShowFps { get; set; }
 
         internal bool Initialized { get; private set; }
         internal IKernel Kernel { get; private set; }
@@ -36,6 +37,7 @@ namespace Nucleus.Core
             graphics.PreferredBackBufferWidth = 960;
             graphics.PreferredBackBufferHeight = 540;
 
+            this.ShowFps = true;
         }
 
         /// <summary>
@@ -106,6 +108,7 @@ namespace Nucleus.Core
         protected override void Draw (GameTime gameTime)
         {
             graphics.GraphicsDevice.Clear (Color.Black);
+
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
 
             if (Screen.CurrentScreen != null)
@@ -113,10 +116,14 @@ namespace Nucleus.Core
                 Screen.CurrentScreen.Draw(gameTime);
             }
 
-            base.Draw (gameTime);
+            if (this.ShowFps)
+            {
+                frameCounter.Draw(this.defaultFont, (float)gameTime.ElapsedGameTime.TotalSeconds, this.spriteBatch);
+            }
 
-            frameCounter.Draw(this.defaultFont, (float)gameTime.ElapsedGameTime.TotalSeconds, this.spriteBatch);
             spriteBatch.End();
+
+            base.Draw (gameTime);
         }
     }
 }
