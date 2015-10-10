@@ -6,13 +6,13 @@ using Nucleus.Core;
 
 namespace Nucleus.Ecs.Components
 {
-    public class SpriteComponent : IDisposable
+    public class ImageComponent : Component, IDisposable
     {
         private string fileName;
         private Texture2D texture;
         private SpriteBatch spriteBatch;
 
-        public SpriteComponent(string fileName)
+        public ImageComponent(string fileName)
         {
             this.fileName = fileName;
             if (CommonGame.Instance.Initialized)
@@ -28,8 +28,9 @@ namespace Nucleus.Ecs.Components
             this.texture = CommonGame.Instance.Content.Load<Texture2D>(this.fileName);
         }
 
-        public void Draw() {
-            this.spriteBatch.Draw(this.texture, Vector2.Zero);
+        public void Draw()
+        {
+            this.spriteBatch.Draw(this.texture, this.Entity.Get<TwoDComponent>().Position);
         }
 
         public void Dispose()

@@ -12,33 +12,34 @@ namespace Nucleus.Core
     {
         private static Screen currentScreen;
 
-        private List<SpriteComponent> sprites = new List<SpriteComponent>();
+        private List<ImageComponent> images = new List<ImageComponent>();
 
         public Screen()
         {
             // You can't load content here, it's too early in the life-cycle
         }
 
-        public void Add(SpriteComponent s) {
-            this.sprites.Add(s);
+        public void Add(Entity e) {
+            var i = e.Get<ImageComponent>();
+            this.images.Add(i);
         }
 
         public virtual void Initialize() {
             // You can load content here
-            foreach (var sprite in sprites)
+            foreach (var image in images)
             {
-                sprite.Initialize();
+                image.Initialize();
             }
         }
 
         public void Dispose()
         {
-            foreach (var s in this.sprites)
+            foreach (var i in this.images)
             {
-                s.Dispose();
+                i.Dispose();
             }
 
-            this.sprites.Clear();
+            this.images.Clear();
         }
 
         public static void ShowScreen(Screen s) {
@@ -53,9 +54,9 @@ namespace Nucleus.Core
 
         public void Draw(GameTime gameTime)
         {
-            foreach (var sprite in sprites)
+            foreach (var image in images)
             {
-                sprite.Draw();
+                image.Draw();
             }
         }
 

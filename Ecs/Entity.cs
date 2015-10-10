@@ -13,6 +13,7 @@ namespace Nucleus.Ecs
 
 		public Entity Add(Component component)
         {
+            component.Entity = this;
 			var type = component.GetType();
             this.components[type] = component;
             return this; // chaining

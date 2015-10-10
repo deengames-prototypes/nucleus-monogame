@@ -47,8 +47,9 @@
     <Compile Include="Core\Screen.cs" />
     <Compile Include="Core\CommonGame.cs" />
     <Compile Include="Ecs\Component.cs" />
-    <Compile Include="Ecs\Components\SpriteComponent.cs" />
     <Compile Include="Ecs\Entity.cs" />
+    <Compile Include="Ecs\Components\TwoDComponent.cs" />
+    <Compile Include="Ecs\Components\ImageComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

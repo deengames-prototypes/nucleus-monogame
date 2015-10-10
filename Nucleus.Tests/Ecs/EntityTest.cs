@@ -9,7 +9,7 @@ namespace Nucleus.Tests.Ecs
     public class EntityTest
     {
         [Test]
-        public void GetGetsSetValue()
+        public void GetGetsAddedValue()
         {
             var e = new Entity();
             e.Add(new StringComponent("a")).Add(new StringComponent("b"));
@@ -19,12 +19,20 @@ namespace Nucleus.Tests.Ecs
         }
 
         [Test]
-        public void GetReturnsEmptyListIfNoComponentsAreSet()
+        public void GetReturnsEmptyListIfNoComponentsAreAdded()
         {
             var e = new Entity();
-            var ex = Assert.Throws<ArgumentException>(() => e.Get<StringComponent>());
+            Assert.Throws<ArgumentException>(() => e.Get<StringComponent>());
         }
 
+        [Test]
+        public void AddSetsComponentEntityToMe()
+        {
+            var e = new Entity();
+            var s = new StringComponent("abc");
+            e.Add(s);
+            Assert.That(s.Entity, Is.EqualTo(e));
+        }
 
         class StringComponent : Component
         {

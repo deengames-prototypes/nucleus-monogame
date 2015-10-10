@@ -4,9 +4,7 @@ namespace Nucleus.Ecs
 {
 	public class Component
 	{
-		public Component ()
-		{
-		}
+        public Entity Entity { get; internal set; }
 	}
 }
 
