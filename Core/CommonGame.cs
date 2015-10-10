@@ -3,18 +3,22 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Ninject;
+using Nucleus.Utils;
 
 namespace Nucleus.Core
 {
     public class CommonGame : Game
     {
-        protected readonly GraphicsDeviceManager graphics;
-		protected SpriteBatch spriteBatch;
+        public static CommonGame Instance { get; private set; }
 
         internal bool Initialized { get; private set; }
-
-        public static CommonGame Instance { get; private set; }
         internal IKernel Kernel { get; private set; }
+
+        protected readonly GraphicsDeviceManager graphics;
+        protected SpriteBatch spriteBatch;
+
+        private readonly FrameCounter frameCounter = new FrameCounter();
+        private SpriteFont defaultFont;
 
         public CommonGame()
         {
@@ -64,7 +68,8 @@ namespace Nucleus.Core
 				// As expected, sadly. See:
 				// http://stackoverflow.com/questions/8971006/best-way-to-create-spritebatch-when-wrapping-underlying-objects
 			}
-            //TODO: use this.Content to load your game content here
+
+            //this.defaultFont = Content.Load<SpriteFont>("Kooten");
         }
 
         /// <summary>
@@ -109,6 +114,8 @@ namespace Nucleus.Core
             }
 
             base.Draw (gameTime);
+
+            frameCounter.Draw(this.defaultFont, (float)gameTime.ElapsedGameTime.TotalSeconds, this.spriteBatch);
         }
     }
 }

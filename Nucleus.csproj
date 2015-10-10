@@ -50,10 +50,12 @@
     <Compile Include="Ecs\Entity.cs" />
     <Compile Include="Ecs\Components\TwoDComponent.cs" />
     <Compile Include="Ecs\Components\ImageComponent.cs" />
+    <Compile Include="Utils\FrameCounter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Core\" />
+    <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config" />
