@@ -35,6 +35,7 @@ namespace Nucleus.Core
             graphics.IsFullScreen = false;      
             graphics.PreferredBackBufferWidth = 960;
             graphics.PreferredBackBufferHeight = 540;
+
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Nucleus.Core
 				// http://stackoverflow.com/questions/8971006/best-way-to-create-spritebatch-when-wrapping-underlying-objects
 			}
 
-            //this.defaultFont = Content.Load<SpriteFont>("Kooten");
+            this.defaultFont = Content.Load<SpriteFont>("Kooten");
         }
 
         /// <summary>
@@ -105,17 +106,17 @@ namespace Nucleus.Core
         protected override void Draw (GameTime gameTime)
         {
             graphics.GraphicsDevice.Clear (Color.Black);
+            spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
 
             if (Screen.CurrentScreen != null)
             {
-                spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
                 Screen.CurrentScreen.Draw(gameTime);
-                spriteBatch.End();
             }
 
             base.Draw (gameTime);
 
             frameCounter.Draw(this.defaultFont, (float)gameTime.ElapsedGameTime.TotalSeconds, this.spriteBatch);
+            spriteBatch.End();
         }
     }
 }

@@ -46,7 +46,7 @@ namespace Nucleus.Utils
         {
             var deltaTime = totalElapsedSeconds;
             this.Update(deltaTime);
-            var fps = string.Format("FPS: {0}", this.AverageFramesPerSecond);
+            var fps = string.Format("FPS: {0}", this.RoundedAverageFramesPerSecond);
 
             if (font == null)
             {
@@ -54,9 +54,11 @@ namespace Nucleus.Utils
             }
             else
             {
-                spriteBatch.DrawString(font, fps, new Vector2(1, 1), Color.Black);
+                spriteBatch.DrawString(font, fps, new Vector2(1, 1), Color.White);
             }
         }
+
+        private int RoundedAverageFramesPerSecond { get { return (int)Math.Round(this.AverageFramesPerSecond); } }
     }
 }
 
