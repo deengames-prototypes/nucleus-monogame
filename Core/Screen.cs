@@ -24,7 +24,8 @@ namespace Nucleus.Core
             this.images.Add(i);
         }
 
-        public virtual void Initialize() {
+        public virtual void Initialize()
+        {
             // You can load content here
             foreach (var image in images)
             {
@@ -42,7 +43,8 @@ namespace Nucleus.Core
             this.images.Clear();
         }
 
-        public static void ShowScreen(Screen s) {
+        public static void ShowScreen(Screen s)
+        {
             if (currentScreen != null)
             {
                 currentScreen.Dispose();
@@ -52,7 +54,11 @@ namespace Nucleus.Core
             s.Initialize();
         }
 
-        public void Draw(GameTime gameTime)
+        public virtual void Update(GameTime gameTime)
+        {
+        }
+
+        public virtual void Draw(GameTime gameTime)
         {
             foreach (var image in images)
             {
