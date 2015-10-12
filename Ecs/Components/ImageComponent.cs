@@ -8,13 +8,13 @@ namespace Nucleus.Ecs.Components
 {
     public class ImageComponent : Component, IDisposable
     {
-        private string fileName;
-        private Texture2D texture;
-        private SpriteBatch spriteBatch;
-        private Vector2 scale = Vector2.One;
-        private Vector2 origin = Vector2.Zero;
+        protected string fileName;
+        protected Texture2D texture;
+        protected SpriteBatch spriteBatch;
+        protected Vector2 scale = Vector2.One;
+        protected Vector2 origin = Vector2.Zero;
 
-        private const float PI = (float)Math.PI;
+        protected const float PI = (float)Math.PI;
 
         public ImageComponent(string fileName)
         {
@@ -33,7 +33,7 @@ namespace Nucleus.Ecs.Components
             this.origin = new Vector2(this.texture.Width / 2, this.texture.Height / 2);
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             var pos = this.Entity.Get<TwoDComponent>();
             this.spriteBatch.Draw(this.texture, pos.Position, null, null, 

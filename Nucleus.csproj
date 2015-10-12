@@ -51,6 +51,7 @@
     <Compile Include="Ecs\Components\TwoDComponent.cs" />
     <Compile Include="Utils\FrameCounter.cs" />
     <Compile Include="Ecs\Components\ImageComponent.cs" />
+    <Compile Include="Ecs\Components\SpriteSheetComponent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

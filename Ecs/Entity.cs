@@ -28,6 +28,11 @@ namespace Nucleus.Ecs
             }
             return (T)this.components[type];
         }
+
+        public bool Has<T>() where T : Component
+        {
+            return this.components.ContainsKey(typeof(T));
+        }
 	}
 }
 

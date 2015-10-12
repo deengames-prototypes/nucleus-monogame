@@ -20,8 +20,16 @@ namespace Nucleus.Core
         }
 
         public void Add(Entity e) {
-            var i = e.Get<ImageComponent>();
-            this.images.Add(i);
+            if (e.Has<ImageComponent>())
+            {
+                var i = e.Get<ImageComponent>();
+                this.images.Add(i);
+            }
+            else if (e.Has<SpriteSheetComponent>())
+            {
+                var i = e.Get<SpriteSheetComponent>();
+                this.images.Add(i);
+            }
         }
 
         public virtual void Initialize()
