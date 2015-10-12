@@ -29,6 +29,10 @@ namespace Nucleus
         private Rectangle rectangle;
         private int totalFrames = 0;
 
+        // for animation
+        private DateTime lastFrameChange;
+        private int frameDelayMs = 0; // > 0 = animate, 0 = don't animate
+
         public SpriteSheetComponent(string fileName, int tileWidth, int tileHeight) : base(fileName)
         {
             // TODO: throw if we're bigger than the image
@@ -40,9 +44,28 @@ namespace Nucleus
 
         public override void Draw()
         {
+            if (this.frameDelayMs > 0 && DateTime.Now > this.lastFrameChange.AddMilliseconds(this.frameDelayMs))
+            {
+                // If there was a big delay, skip frames, so that the animation timing is consistent
+                int framesChanged = (int)((DateTime.Now - this.lastFrameChange).TotalMilliseconds / this.frameDelayMs);
+                this.CurrentFrame += framesChanged;
+                this.lastFrameChange = DateTime.Now;
+            }
+
             var pos = this.Entity.Get<TwoDComponent>();
             this.spriteBatch.Draw(this.texture, pos.Position, null, this.rectangle, 
                 origin, pos.Rotation * PI / 180f, scale, null, 0, pos.Z);
+        }
+
+        public void Animate(int frameDelayMs)
+        {
+            this.frameDelayMs = frameDelayMs;
+            this.lastFrameChange = DateTime.Now;
+        }
+
+        public void StopAnimation()
+        {
+            this.frameDelayMs = 0;
         }
     }
 }
