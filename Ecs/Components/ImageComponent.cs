@@ -36,7 +36,7 @@ namespace Nucleus.Ecs.Components
         public virtual void Draw()
         {
             var pos = this.Entity.Get<TwoDComponent>();
-            this.spriteBatch.Draw(this.texture, pos.Position, null, null, 
+            this.spriteBatch.Draw(this.texture, pos.Position + this.origin, null, null, 
                 origin, pos.Rotation * PI / 180f, scale, null, 0, pos.Z);
         }
 

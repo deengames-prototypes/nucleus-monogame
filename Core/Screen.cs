@@ -75,6 +75,9 @@ namespace Nucleus.Core
         }
 
         public static Screen CurrentScreen { get { return currentScreen; } }
+
+        public int Width { get { return CommonGame.Instance.Width; } }
+        public int Height { get { return CommonGame.Instance.Height; } }
     }
 }
 

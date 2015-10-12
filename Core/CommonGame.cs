@@ -40,6 +40,9 @@ namespace Nucleus.Core
             this.ShowFps = true;
         }
 
+        internal int Width { get { return graphics.PreferredBackBufferWidth; } }
+        internal int Height { get { return graphics.PreferredBackBufferHeight; } }
+
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic

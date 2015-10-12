@@ -2,7 +2,7 @@
 using Nucleus.Ecs.Components;
 using Microsoft.Xna.Framework;
 
-namespace Nucleus
+namespace Nucleus.Ecs.Components
 {
     public class SpriteSheetComponent : ImageComponent
     {
@@ -53,7 +53,7 @@ namespace Nucleus
             }
 
             var pos = this.Entity.Get<TwoDComponent>();
-            this.spriteBatch.Draw(this.texture, pos.Position, null, this.rectangle, 
+            this.spriteBatch.Draw(this.texture, pos.Position + this.origin, null, this.rectangle, 
                 origin, pos.Rotation * PI / 180f, scale, null, 0, pos.Z);
         }
 
