@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using Nucleus.Core;
+using Ninject;
 
 namespace Nucleus.Utils
 {
@@ -12,53 +14,28 @@ namespace Nucleus.Utils
         {
         }
 
-        public long TotalFrames { get; private set; }
-        public float TotalSeconds { get; private set; }
-        public float AverageFramesPerSecond { get; private set; }
-        public float CurrentFramesPerSecond { get; private set; }
+        private int framesSeen = 0;
+        private DateTime lastUpdate = DateTime.Now;
+        private int fps;
 
-        public const int MAXIMUM_SAMPLES = 100;
-
-        private Queue<float> sampleBuffer = new Queue<float>();
-
-        public bool Update(float deltaTime)
+        public void Draw()
         {
-            CurrentFramesPerSecond = 1.0f / deltaTime;
+            framesSeen += 1;
+            var elapsed = (DateTime.Now - lastUpdate).TotalSeconds;
 
-            sampleBuffer.Enqueue(CurrentFramesPerSecond);
-
-            if (sampleBuffer.Count > MAXIMUM_SAMPLES)
+            if (elapsed > 1)
             {
-                sampleBuffer.Dequeue();
-                AverageFramesPerSecond = sampleBuffer.Average(i => i);
-            } 
-            else
-            {
-                AverageFramesPerSecond = CurrentFramesPerSecond;
+                fps = (int)Math.Round(framesSeen / elapsed);
+                framesSeen = 0;
+                this.lastUpdate = DateTime.Now;
             }
 
-            TotalFrames++;
-            TotalSeconds += deltaTime;
-            return true;
+            var font = CommonGame.Instance.Kernel.Get<SpriteFont>();
+            var spriteBatch = CommonGame.Instance.Kernel.Get<SpriteBatch>();
+            var fpsDisplay = string.Format("{0} FPS", fps);
+            spriteBatch.DrawString(font, fpsDisplay, new Vector2(1, 1), Color.White);
+
         }
-
-        public void Draw(SpriteFont font, float totalElapsedSeconds, SpriteBatch spriteBatch)
-        {
-            var deltaTime = totalElapsedSeconds;
-            this.Update(deltaTime);
-            var fps = string.Format("FPS: {0}", this.RoundedAverageFramesPerSecond);
-
-            if (font == null)
-            {
-                Console.WriteLine(fps);
-            }
-            else
-            {
-                spriteBatch.DrawString(font, fps, new Vector2(1, 1), Color.White);
-            }
-        }
-
-        private int RoundedAverageFramesPerSecond { get { return (int)Math.Round(this.AverageFramesPerSecond); } }
     }
 }
 

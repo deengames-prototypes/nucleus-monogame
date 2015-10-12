@@ -64,18 +64,14 @@ namespace Nucleus.Core
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             this.spriteBatch = new SpriteBatch (GraphicsDevice);
+            this.defaultFont = Content.Load<SpriteFont>("Kooten");
 
             // Setup DI bindings
 			this.Kernel.Bind<SpriteBatch>().ToConstant(this.spriteBatch);
-			// Why does the first get call always fail? 'tis strange.
-			try {
-				this.Kernel.Get<SpriteBatch>();
-			} catch (NullReferenceException) {
-				// As expected, sadly. See:
-				// http://stackoverflow.com/questions/8971006/best-way-to-create-spritebatch-when-wrapping-underlying-objects
-			}
+            this.Kernel.Bind<SpriteFont>().ToConstant(this.defaultFont);
 
-            this.defaultFont = Content.Load<SpriteFont>("Kooten");
+            skipFirstNullRefExceptionFromNinject<SpriteBatch>();
+            skipFirstNullRefExceptionFromNinject<SpriteFont>();
         }
 
         /// <summary>
@@ -110,6 +106,7 @@ namespace Nucleus.Core
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw (GameTime gameTime)
         {
+            base.Draw (gameTime);
             graphics.GraphicsDevice.Clear (Color.Black);
 
             spriteBatch.Begin(SpriteSortMode.BackToFront, BlendState.NonPremultiplied);
@@ -119,14 +116,25 @@ namespace Nucleus.Core
                 Screen.CurrentScreen.Draw(gameTime);
             }
 
-            if (this.ShowFps)
-            {
-                frameCounter.Draw(this.defaultFont, (float)gameTime.ElapsedGameTime.TotalSeconds, this.spriteBatch);
-            }
-
             spriteBatch.End();
 
-            base.Draw (gameTime);
+            if (this.ShowFps)
+            {
+                spriteBatch.Begin();
+                frameCounter.Draw();
+                spriteBatch.End();
+            }
+        }
+
+        private void skipFirstNullRefExceptionFromNinject<T>()
+        {
+            // Why does the first get call always fail? 'tis strange.
+            try {
+                this.Kernel.Get<T>();
+            } catch (NullReferenceException) {
+                // As expected, sadly. See:
+                // http://stackoverflow.com/questions/8971006/best-way-to-create-spritebatch-when-wrapping-underlying-objects
+            }
         }
     }
 }
